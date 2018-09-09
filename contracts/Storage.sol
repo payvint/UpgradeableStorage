@@ -13,7 +13,7 @@ library Storage {
     struct UpgradeableStorage {
         bytes32[] fields;
         mapping (string => Type) types;
-        string[] fieldNames;
+        //string[] fieldNames;
     }
 
     function addField(UpgradeableStorage storage self, uint8 indexOfType, uint size, string fieldName, bytes32 data) private returns (uint indexInStorage) {
@@ -40,9 +40,9 @@ library Storage {
         return false;
     }
 
-    function getFieldNames(UpgradeableStorage storage self) public view returns (string[]) {
+    /*function getFieldNames(UpgradeableStorage storage self) public view returns (string[]) {
         return self.fieldNames;
-    }
+    }*/
 
     function getFieldType(UpgradeableStorage storage self, string fieldName) public view returns (string) {
         if (self.types[fieldName].indexOfType == 1) {
@@ -69,16 +69,24 @@ library Storage {
     }
 
     function addStringField(UpgradeableStorage storage self, string fieldName, string data) public returns (uint indexInStorage) {
-        indexInStorage = addField(self, 2, 32, fieldName, bytes32(data));
+        bytes32 bytesString;
+        assembly {
+            bytesString := mload(add(data, 32))
+        }
+        indexInStorage = addField(self, 2, 32, fieldName, bytesString);
     }
 
     function upgradeStringField(UpgradeableStorage storage self, string fieldName, string data) public returns (bool) {
-        return upgradeField(self, fieldName, bytes32(data));
+        bytes32 bytesString;
+        assembly {
+            bytesString := mload(add(data, 32))
+        }
+        return upgradeField(self, fieldName, bytesString);
     }
 
-    function showStringField(UpgradeableStorage self, string fieldName) public view returns (string) {
+    function showStringField(UpgradeableStorage storage self, string fieldName) public view returns (string) {
         bytes32 stringData = showField(self, fieldName);
-        bytes[] memory data = new bytes(32);
+        bytes memory data = new bytes(32);
         for (uint i = 0; i < 32; i++) {
             data[i] = stringData[i];
         }

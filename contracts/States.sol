@@ -14,16 +14,16 @@ contract States {
     constructor(address newAddressOfUsersStorage, address newAddressOfUsersFunctionality) public {
         owner = msg.sender;
         addressOfUsersStorage = newAddressOfUsersStorage;
-        addressOfUsersFunctionality = newAddressOfUsesrsFunctionality;
+        addressOfUsersFunctionality = newAddressOfUsersFunctionality;
     }
 
     function upgradeFunctionality(address newAddressOfUsersFunctionality) public onlyOwner {
         require (newAddressOfUsersFunctionality != address(0));
-        addressOfUsersFunctionality = newAddressOfUsesrsFunctionality;
+        addressOfUsersFunctionality = newAddressOfUsersFunctionality;
     }
 
-    function getAddressOfusersStorage() public view returns (address) {
-        require(msg.sender == addressOfUsersfunctionality);
+    function getAddressOfUsersStorage() public view returns (address) {
+        require(msg.sender == addressOfUsersFunctionality);
         return addressOfUsersStorage;
     }
 }

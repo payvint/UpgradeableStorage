@@ -22,29 +22,39 @@ contract UsersStorage {
         owner = newOwner;
     }
 
+    function getNumberOfUsers() public view returns (uint) {
+        return numberOfUsers;
+    }
+
+    function incrementNumberOfUsers() public {
+        numberOfUsers++;
+    }
+
     function addUintData(uint indexOfUser, string fieldName, uint data) public {
         Storage.addUintField(users[indexOfUser], fieldName, data);
     }
 
     function upgradeUintData(uint indexOfUser, string fieldName, uint data) public {
-        Storage.upgradeUintField(users[indexOfUsers], fieldName, data)
+        Storage.upgradeUintField(users[indexOfUser], fieldName, data);
     }
 
-    function showUintData(uint indexOfUser, string fieldName) public return (uint) {
-        require(Storage.getFieldType(users[indexOfUser]) == "uint");
+    function showUintData(uint indexOfUser, string fieldName) public returns (uint) {
+        string memory uintString = "uint";
+        require(keccak256(Storage.getFieldType(users[indexOfUser], fieldName)) == keccak256(uintString));
         return Storage.showUintField(users[indexOfUser], fieldName);
     }
 
     function addStringData(uint indexOfUser, string fieldName, string data) public {
-        Storage.addAddressField(users[indexOfUser], fieldName, data);
+        Storage.addStringField(users[indexOfUser], fieldName, data);
     }
 
-    function upgradeStringData(uint indexOfUser, string, fieldName, string data) public {
-        Storage.upgradeStringField(users[indexOfuser], fieldName, data);
+    function upgradeStringData(uint indexOfUser, string fieldName, string data) public {
+        Storage.upgradeStringField(users[indexOfUser], fieldName, data);
     }
 
-    function showStringData(uint indexOfUser, string fieldName) public returns (uint) {
-        require(Storage.getFieldType(users[indexOfUser]) == "string"); 
+    function showStringData(uint indexOfUser, string fieldName) public returns (string) {
+        string memory stringString = "string";
+        require(keccak256(Storage.getFieldType(users[indexOfUser], fieldName)) == keccak256(stringString)); 
         return Storage.showStringField(users[indexOfUser], fieldName);
     }
 }
