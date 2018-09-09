@@ -17,7 +17,7 @@ contract UsersStorage {
         owner = msg.sender;
     }
 
-    function transferOwnership(address newOwner) onlyOwner {
+    function transferOwnership(address newOwner) public onlyOwner {
         require(newOwner != address(0));
         owner = newOwner;
     }
@@ -38,9 +38,9 @@ contract UsersStorage {
         Storage.upgradeUintField(users[indexOfUser], fieldName, data);
     }
 
-    function showUintData(uint indexOfUser, string fieldName) public returns (uint) {
+    function showUintData(uint indexOfUser, string fieldName) public view returns (uint) {
         string memory uintString = "uint";
-        require(keccak256(Storage.getFieldType(users[indexOfUser], fieldName)) == keccak256(uintString));
+        require(keccak256(abi.encodePacked(Storage.getFieldType(users[indexOfUser], fieldName))) == keccak256(abi.encodePacked(uintString)));
         return Storage.showUintField(users[indexOfUser], fieldName);
     }
 
@@ -52,9 +52,9 @@ contract UsersStorage {
         Storage.upgradeStringField(users[indexOfUser], fieldName, data);
     }
 
-    function showStringData(uint indexOfUser, string fieldName) public returns (string) {
+    function showStringData(uint indexOfUser, string fieldName) public view returns (string) {
         string memory stringString = "string";
-        require(keccak256(Storage.getFieldType(users[indexOfUser], fieldName)) == keccak256(stringString)); 
+        require(keccak256(abi.encodePacked(Storage.getFieldType(users[indexOfUser], fieldName))) == keccak256(abi.encodePacked(stringString))); 
         return Storage.showStringField(users[indexOfUser], fieldName);
     }
 }
