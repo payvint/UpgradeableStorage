@@ -11,13 +11,13 @@ contract States {
         _;
     }
 
-    constructor(address newAddressOfUsersStorage, address newAddressOfUsersFunctionality) public {
+    constructor(address newAddressOfUsersStorage) public {
         owner = msg.sender;
         addressOfUsersStorage = newAddressOfUsersStorage;
-        addressOfUsersFunctionality = newAddressOfUsersFunctionality;
+        //addressOfUsersFunctionality = newAddressOfUsersFunctionality;
     }
 
-    function upgradeFunctionality(address newAddressOfUsersFunctionality) public onlyOwner {
+    function addFunctionality(address newAddressOfUsersFunctionality) public onlyOwner {
         require (newAddressOfUsersFunctionality != address(0));
         addressOfUsersFunctionality = newAddressOfUsersFunctionality;
     }
