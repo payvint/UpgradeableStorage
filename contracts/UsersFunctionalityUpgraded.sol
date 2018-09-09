@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 import "./UsersStorage.sol";
 import "./States.sol";
 
-contract UsersFunctionality {
+contract UsersFunctionalityUpgraded {
 
     address addressOfStates;
 
